@@ -4,6 +4,14 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   // do your magic!
+  postDb.get()
+    .then(response => {
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "The posts' information could not be retrieved." ,
+      error: err});
+    })
 });
 
 router.get('/:id', (req, res) => {
