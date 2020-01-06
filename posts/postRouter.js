@@ -1,5 +1,5 @@
 const express = require('express');
-
+const postDb = require('./postDb');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -22,6 +22,14 @@ router.put('/:id', (req, res) => {
 
 function validatePostId(req, res, next) {
   // do your magic!
+  postDb.getById(req.body.id)
+    .then(response => {
+        req.postId = response.data;
+        next();
+    })
+    .catch(err => {
+      res.status(400).json({message: "invalid post id"})
+    });
 }
 
 module.exports = router;
