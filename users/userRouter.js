@@ -3,8 +3,18 @@ const userDb = require('./userDb');
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/', validateUser, (req, res) => {
   // do your magic!
+  userDb.insert(req.body)
+    .then(response => {
+      console.log(response);
+      res.status(201).json(response);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({message: `There was a problem adding ${req.body.name} to the database.`,
+        error: err});
+    });
 });
 
 router.post('/:id/posts', (req, res) => {
@@ -75,8 +85,26 @@ function validateUserId(req, res, next) {
     });
 }
 
+
+/*
+validateUser()
+
+    validateUser validates the body on a request to create a new user
+    if the request body is missing, cancel the request and respond with status 400 and { message: "missing user data" }
+    if the request body is missing the required name field, cancel the request and respond with status 400 
+    and { message: "missing required name field" }
+
+*/
 function validateUser(req, res, next) {
   // do your magic!
+  if (Object.entries(req.body).length === 0) {
+    res.status(400).json({ message: "missing user data" });
+  } else if 
+    (!req.body.name) {
+      res.status(400).json({ message: "missing required name field" });
+  } else {
+      next();
+  }
 }
 
 function validatePost(req, res, next) {
