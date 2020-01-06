@@ -1,5 +1,6 @@
 const express = require('express');
 const userDb = require('./userDb');
+const postDB = require('../posts/postDb');
 
 const router = express.Router();
 
@@ -17,8 +18,18 @@ router.post('/', validateUser, (req, res) => {
     });
 });
 
-router.post('/:id/posts', (req, res) => {
+router.post('/:id/posts', validatePost, (req, res) => {
   // do your magic!
+  const id = req.params.id;
+  postDB.insert({text: req.body.text, user_id : id})
+    .then(response => {
+      console.log(response);
+      res.status(201).json(response);
+    })
+    .catch(err => {
+      res.status(500).json({message : `There was a problem adding a post for user_id ${id} to the database.`,
+        error: err})
+    });
 });
 
 router.get('/', (req, res) => {
@@ -99,16 +110,34 @@ function validateUser(req, res, next) {
   // do your magic!
   if (Object.entries(req.body).length === 0) {
     res.status(400).json({ message: "missing user data" });
-  } else if 
-    (!req.body.name) {
-      res.status(400).json({ message: "missing required name field" });
+  } else if (!req.body.name) {
+    res.status(400).json({ message: "missing required name field" });
   } else {
-      next();
+    next();
   }
 }
 
+/*
+
+validatePost()
+
+    validatePost validates the body on a request to create a new post
+    if the request body is missing, cancel the request and respond with status 
+    400 and { message: "missing post data" }
+    if the request body is missing the required text field, cancel the request and 
+    respond with status 400 and { message: "missing required text field" }
+
+*/
+
 function validatePost(req, res, next) {
   // do your magic!
-}
+  if (Object.entries(req.body).length === 0) {
+    res.status(400).json({ message: "missing post data" });
+  } else if (!req.body.text) {
+    res.status(400).json({ message: "missing required text field" });
+  } else {
+    next();
+  }
+};
 
 module.exports = router;
