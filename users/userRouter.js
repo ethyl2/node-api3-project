@@ -48,6 +48,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', validateUserId, (req, res) => {
   // do your magic!
+  //Note: id must be sent in body! 
   const id = req.body.id;
   //const id = req.params.id;
   userDb.getById(id)
@@ -74,7 +75,7 @@ router.get('/:id/posts', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateUserId, (req, res) => {
   // do your magic!
   const id = req.params.id;
   userDb.remove(id)
@@ -92,8 +93,31 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateUserId, (req, res) => {
   // do your magic!
+  const id = req.params.id;
+  if (!req.body.name) {
+    res.status(400).json({ errorMessage: "Please provide updated name for the user." });
+  }
+  userDb.update(id, {"name" : req.body.name})
+    .then(response => {
+      if (response === 1) {
+        userDb.getById(id)
+          .then(response => {
+            res.status(201).json(response);
+          })
+          .catch(err => {
+            res.status(404).json({message: `The server was unable to retrieve the user with id of ${id}.`,
+              error: err });
+          })
+      } else {
+        res.status(500).json({message: `The server was unable to edit the user with id ${id}.`});
+      }
+    })
+    .catch(err => {
+      res.status(500).json({message: `The server was unable to edit the user with id ${id}.`, 
+        error: err});
+    });
 });
 
 //custom middleware
