@@ -76,6 +76,20 @@ router.get('/:id/posts', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // do your magic!
+  const id = req.params.id;
+  userDb.remove(id)
+    .then(response => {
+      if(response === 1) {
+        res.status(202).json({"Number of records deleted: " : response});
+        //Change this later if a different response is wanted.
+      } else {
+        res.status(500).json({message: `The server was unable to delete the user with id of ${id}.`});
+      }
+    })
+    .catch(err => {
+      res.status(500).json({message: `The server was unable to delete the user with id of ${id}.`, 
+        error: err});
+    });
 });
 
 router.put('/:id', (req, res) => {
