@@ -14,16 +14,63 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validatePostId, (req, res) => {
   // do your magic!
+  const id = req.body.id;
+  postDb.getById(id)
+    .then(response => {
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      res.status(500).json({ message: `The post with id ${id}'s information could not be retrieved.` ,
+      error: err});
+    });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validatePostId, (req, res) => {
   // do your magic!
+  const id = req.body.id;
+  postDb.remove(id)
+    .then(response => {
+      if (response === 1) {
+        res.status(202).json({"number of posts deleted: ": response});
+      } else {
+        res.status(500).json({error: `Unable to remove post with id of ${id}`});
+      }
+    })
+    .catch(err => {
+      res.status(500).json({message: `Unable to remove post with id of ${id}`,
+      error: err});
+    });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validatePostId, (req, res) => {
   // do your magic!
+  const id = req.body.id;
+  if (!req.body.text) {
+    res.status(400).json({ message: 'Please provide updated text for the post' });
+  }
+  if (!req.body.user_id) {
+    res.status(400).json({ message: 'Please provide user_id for the updated post' });
+  }
+  postDb.update(id, {"text" : req.body.text, "user_id" : req.body.user_id})
+    .then(response => {
+      if (response === 1) {
+        postDb.getById(id) 
+          .then(response => {
+            res.status(201).json(response);
+          })
+          .catch(err => {
+            res.status(404).json({message: `Unable to retrieve post of id ${id}.`});
+          });
+      } else {
+        res.status(500).json({ error:`Unable to update post of id ${id}.` });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message:`Unable to update post of id ${id}.`, 
+      error: err });
+    });
 });
 
 // custom middleware
