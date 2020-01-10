@@ -33,7 +33,7 @@ router.delete('/:id', validatePostId, (req, res) => {
   postDb.remove(id)
     .then(response => {
       if (response === 1) {
-        res.status(202).json({"number of posts deleted: ": response});
+        res.status(202).json({"NumberPostsDeleted: ": response});
       } else {
         res.status(500).json({error: `Unable to remove post with id of ${id}`});
       }

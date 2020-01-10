@@ -81,7 +81,7 @@ router.delete('/:id', validateUserId, (req, res) => {
   userDb.remove(id)
     .then(response => {
       if(response === 1) {
-        res.status(202).json({"Number of records deleted: " : response});
+        res.status(202).json({"NumberRecordsDeleted: " : response});
         //Change this later if a different response is wanted, like returning the updated user list.
       } else {
         res.status(500).json({message: `The server was unable to delete the user with id of ${id}.`});
