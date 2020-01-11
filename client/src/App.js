@@ -27,11 +27,22 @@ function App() {
     });
   }, []);
 
+  const updateUsers = () => {
+    axios.get('http://localhost:9000/users')
+    .then(response => {
+      console.log(response);
+      setUsers(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
   return (
     <div className="App">
       <Header />
       
-      <UsersContext.Provider value={users}>
+      <UsersContext.Provider value={{users: users, updateUsers: updateUsers}}>
         <Route exact path='/' component={Home} />
         <Route exact path='/users' component={UsersList} />
         <Route path ='/users/:id' component={User} />

@@ -48,9 +48,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', validateUserId, (req, res) => {
   // do your magic!
-  //Note: id must be sent in body! 
-  const id = req.body.id;
-  //const id = req.params.id;
+  const id = req.params.id;
   userDb.getById(id)
     .then(response => {
       console.log(response)
@@ -133,7 +131,7 @@ validateUserId()
 
 function validateUserId(req, res, next) {
   // do your magic!
-  userDb.getById(req.body.id)
+  userDb.getById(req.params.id)
     .then(response => {
         req.user = response.data;
         next();
