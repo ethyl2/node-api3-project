@@ -6,7 +6,7 @@ import Quill from '../images/quill.png';
 import GreenCheck from '../images/GreenCheck.png';
 
 const User = (props) => {
-    const users = useContext(UsersContext);
+    const { users } = useContext(UsersContext);
     const [user, setUser] = useState({name: '', id:''});
     const [posts, setPosts] = useState();
     const [isEditing, setIsEditing] = useState(false);

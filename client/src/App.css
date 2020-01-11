@@ -5,6 +5,10 @@
     background-repeat: none;
 }
 
+.inner-users-box {
+    clear: both;
+}
+
 .users-box h3 {
     padding-bottom: 2rem;
     
@@ -29,7 +33,7 @@
     font-size: 4.5rem;
 }
 
-.edit-form {
+form {
     padding: 3rem;
     padding-top: 6rem;
     font-size: 6rem;
@@ -39,7 +43,7 @@
 }
 
 
-.edit-form input {
+form input {
     font-family: 'Acme', sans-serif;
     background: #666666;
     border: none;
@@ -53,8 +57,12 @@
     opacity: 1;
 }
 
-.edit-form button img {
+form button img {
     max-width: 100%;
+}
+
+.add-form {
+    float: left;
 }
 
 .user-box p {

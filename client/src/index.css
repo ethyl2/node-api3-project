@@ -78,5 +78,6 @@ button {
   outline: none;
   background: black;
   width: 5rem;
-  
+  color: white;
+  font-size: 2.25rem;
 }

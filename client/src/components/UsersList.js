@@ -1,14 +1,36 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { UsersContext } from '../contexts/UsersContext';
 
 import DeleteX from '../images/DeleteX.png';
+import Plus from '../images/Plus.png';
+import GreenCheck from '../images/GreenCheck.png';
 
 const UsersList = () => {
     const { users, updateUsers } = useContext(UsersContext);
 
+    const [isAdding, setIsAdding] = useState(false);
+    const [addedName, setAddedName] = useState('');
+
+    const handleAddChange = e => {
+        setAddedName(e.target.value);
+    }
+
+    const handleAddSubmit = e => {
+        e.preventDefault();
+        setIsAdding(!isAdding);
+        axios.post('http://localhost:9000/users', {"name": addedName})
+            .then(response => {
+                console.log(response);
+                updateUsers();
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+    }
     const handleDelete = id => {
         console.log('time to delete', id)
         axios.delete(`http://localhost:9000/users/${id}`)
@@ -32,10 +54,30 @@ const UsersList = () => {
         name.style.textDecoration = 'none';
     }
 
+    const toggleAdd = () => {
+        setIsAdding(!isAdding);
+    }
+
     return (
 
         <div className='users-box'>
-            {users && users.map(user => {
+            {!isAdding && 
+            <button onClick={toggleAdd}>
+                <div className='icon-container'>
+                    <img src={Plus} alt='add' />
+                </div>
+            </button>
+            }
+
+            {isAdding && <form className='add-form' onSubmit={handleAddSubmit}>
+                        <input type='text' name='name' id='name' onChange={handleAddChange} value={addedName}/>
+                        <button type='submit'>
+                                <img src={GreenCheck} />
+                        </button>
+                    </form>}
+
+            {users && <div className='inner-users-box'>
+                {users.map(user => {
                 return (
                 
                     <div key={user.id} className='user-name-box'>
@@ -53,6 +95,7 @@ const UsersList = () => {
                     </div>
                 )}
             )}
+            </div>}
             </div>
     )
 }
