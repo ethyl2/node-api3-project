@@ -34,16 +34,16 @@
 }
 
 form {
-    padding: 3rem;
     padding-top: 6rem;
     font-size: 6rem;
     display: flex;
     justify-content: center;
     align-items: center; 
+    width: 100%;
 }
 
 
-form input, form textarea {
+form input {
     font-family: 'Acme', sans-serif;
     background: #666666;
     border: none;
@@ -51,12 +51,12 @@ form input, form textarea {
     padding: 0.5rem;
     outline: none;
     border-radius: 3px;
+    width: 100%;
 }
 
-textarea {
-    width: 100%;
-    height: 12rem;
-    font-size: 2rem;
+input.post {
+    height: 4rem;
+    font-size: 1.75rem;
 }
 
 ::placeholder { 

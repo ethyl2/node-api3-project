@@ -73,13 +73,13 @@ const Posts = ( { id }) => {
 
                 {isAddingPost && 
                     <form className='add-post-form' onSubmit={handleAddSubmit}>
-                    <textarea name='text' id='text' onChange={handleAddChange} value={newPost}/>
-                    <button type='submit'>
-                            <img src={GreenCheck} alt='submit post'/>
-                    </button>
-                </form>
+                        <input type='text' name='text' id='text' onChange={handleAddChange} value={newPost}/>
+                        <button type='submit'>
+                                <img src={GreenCheck} alt='submit post'/>
+                        </button>
+                    </form>
                 }
-                {posts && posts.map(post => <Post key={post.id} id={post.id} text={post.text} handleDelete={handleDelete} />)}
+                {posts && posts.map(post => <Post key={post.id} id={post.id} text={post.text} handleDelete={handleDelete} userId={id}/>)}
             </div>
     )
 }

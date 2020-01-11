@@ -46,7 +46,7 @@ router.delete('/:id', validatePostId, (req, res) => {
 
 router.put('/:id', validatePostId, (req, res) => {
   // do your magic!
-  const id = req.body.id;
+  const id = req.params.id;
   if (!req.body.text) {
     res.status(400).json({ message: 'Please provide updated text for the post' });
   }
