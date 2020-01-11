@@ -1,24 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import {  Route } from 'react-router-dom';
+import axios from 'axios';
+
+import { UsersContext } from './contexts/UsersContext';
+
 import './App.css';
 
+import Header from './components/Header';
+import Home from  './components/Home';
+import UsersList from './components/UsersList';
+import User from './components/User';
+
+
 function App() {
+
+  const [users, setUsers] = useState(null);
+
+  useEffect(() => {
+    axios.get('http://localhost:9000/users')
+    .then(response => {
+      console.log(response);
+      setUsers(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      
+      <UsersContext.Provider value={users}>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/users' component={UsersList} />
+        <Route path ='/users/:id' component={User} />
+      </UsersContext.Provider>
+
     </div>
   );
 }
