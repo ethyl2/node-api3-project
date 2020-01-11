@@ -29,7 +29,7 @@ router.get('/:id', validatePostId, (req, res) => {
 
 router.delete('/:id', validatePostId, (req, res) => {
   // do your magic!
-  const id = req.body.id;
+  const id = req.params.id;
   postDb.remove(id)
     .then(response => {
       if (response === 1) {
@@ -77,7 +77,7 @@ router.put('/:id', validatePostId, (req, res) => {
 
 function validatePostId(req, res, next) {
   // do your magic!
-  postDb.getById(req.body.id)
+  postDb.getById(req.params.id)
     .then(response => {
         req.postId = response.data;
         next();

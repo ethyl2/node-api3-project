@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import GreenCheck from '../images/GreenCheck.png';
 import Plus from '../images/Plus.png';
+import DeleteX from '../images/DeleteX.png';
 
 const Posts = ( { id }) => {
     const { users } = useContext(UsersContext);
@@ -34,6 +35,17 @@ const Posts = ( { id }) => {
         setNewPost('');
     }
 
+    const handleDelete = postId => {
+        console.log('Time to delete post of id ', postId);
+        axios.delete(`http://localhost:9000/posts/${postId}`)
+        .then(response => {
+            console.log(response);
+            setPosts(posts.filter(post => Number(post.id) !== Number(postId)));
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
     
     useEffect(() => {
         if (users) {
@@ -66,7 +78,17 @@ const Posts = ( { id }) => {
                     </button>
                 </form>
                 }
-                {posts && posts.map(post => <p key={post.id}>"{post.text}"</p>)}
+                {posts && posts.map(post => {
+                    return (
+                        <div className='post-box' key={post.id}>
+                            <div className='icon-container' onClick={() => handleDelete(post.id)}>
+                                <img src={DeleteX} alt='delete' />
+                            </div>
+                            <p key={post.id}>"{post.text}"</p>
+                            
+                        </div>
+                    )
+                })}`
             </div>
     )
 }
