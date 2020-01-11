@@ -2,20 +2,18 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UsersContext } from '../contexts/UsersContext';
 import axios from 'axios';
 
+import Posts from './Posts';
+
 import Quill from '../images/quill.png';
 import GreenCheck from '../images/GreenCheck.png';
-import Plus from '../images/Plus.png';
+
 
 const User = (props) => {
     const { users } = useContext(UsersContext);
     const [user, setUser] = useState({name: '', id:''});
-    const [posts, setPosts] = useState();
-
+    
     const [isEditing, setIsEditing] = useState(false);
     const [editedName, setEditedName] = useState(user.name || 'holder');
-
-    const [isAddingPost, setIsAddingPost] = useState(false);
-    const [newPost, setNewPost ] = useState('');
 
     const id = props.match.params.id;
     
@@ -42,41 +40,12 @@ const User = (props) => {
         setEditedName(user.name);
     }
 
-    const toggleAdd = () => {
-        setIsAddingPost(!isAddingPost);
-    }
-
-    const handleAddChange = e => {
-        setNewPost(e.target.value);
-    }
-
-    const handleAddSubmit = e => {
-        e.preventDefault();
-        axios.post(`http://localhost:9000/users/${id}/posts`, {"text": newPost})
-        .then(response => {
-            console.log(response);
-            setPosts([...posts, response.data]);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-        setIsAddingPost(!isAddingPost);
-    }
-
+    
     useEffect(() => {
         if (users) {
             const winner = users.find(user => Number(user.id) === Number(id));
             setUser({...user, name: winner.name, id: winner.id} );
-            setEditedName(winner.name);
-            
-            axios.get(`http://localhost:9000/users/${id}/posts`)
-                .then(response => {
-                    console.log(response);
-                    setPosts(response.data);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+            setEditedName(winner.name); 
         }
     }, [users]);
 
@@ -87,31 +56,14 @@ const User = (props) => {
                 {isEditing && <form className='edit-form' onSubmit={handleEditSubmit}>
                         <input type='text' name='name' id='name' onChange={handleEditChange} value={editedName}/>
                         <button type='submit'>
-                                <img src={GreenCheck} />
+                                <img src={GreenCheck} alt='submit name changes'/>
                         </button>
                     </form>}
                 {!isEditing && <div className='icon-container' onClick={toggleEdit}>
                     <img src={Quill} alt='edit' />
                 </div>}
             </div>
-
-            <div className='posts-box'>
-                <button onClick={toggleAdd}>
-                    <div className='icon-container'>
-                        <img src={Plus} alt='add' />
-                    </div>
-                </button>
-
-                {isAddingPost && 
-                    <form className='add-post-form' onSubmit={handleAddSubmit}>
-                    <input type='text' name='text' id='text' onChange={handleAddChange} value={newPost}/>
-                    <button type='submit'>
-                            <img src={GreenCheck} />
-                    </button>
-                </form>
-                }
-                {posts && posts.map(post => <p key={post.id}>"{post.text}"</p>)}
-            </div>
+            <Posts id={id} />
         </div>
     )
 }

@@ -72,7 +72,7 @@ const UsersList = () => {
             {isAdding && <form className='add-form' onSubmit={handleAddSubmit}>
                         <input type='text' name='name' id='name' onChange={handleAddChange} value={addedName}/>
                         <button type='submit'>
-                                <img src={GreenCheck} />
+                                <img src={GreenCheck} alt='submit new user'/>
                         </button>
                     </form>}
 
