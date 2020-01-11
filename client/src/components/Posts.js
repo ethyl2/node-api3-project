@@ -2,9 +2,10 @@ import React, { useContext, useState, useEffect } from 'react';
 import { UsersContext } from '../contexts/UsersContext';
 import axios from 'axios';
 
+import Post from './Post';
+
 import GreenCheck from '../images/GreenCheck.png';
 import Plus from '../images/Plus.png';
-import DeleteX from '../images/DeleteX.png';
 
 const Posts = ( { id }) => {
     const { users } = useContext(UsersContext);
@@ -78,17 +79,7 @@ const Posts = ( { id }) => {
                     </button>
                 </form>
                 }
-                {posts && posts.map(post => {
-                    return (
-                        <div className='post-box' key={post.id}>
-                            <div className='icon-container' onClick={() => handleDelete(post.id)}>
-                                <img src={DeleteX} alt='delete' />
-                            </div>
-                            <p key={post.id}>"{post.text}"</p>
-                            
-                        </div>
-                    )
-                })}`
+                {posts && posts.map(post => <Post key={post.id} id={post.id} text={post.text} handleDelete={handleDelete} />)}
             </div>
     )
 }
