@@ -57,6 +57,7 @@ form input {
 input.post {
     height: 4rem;
     font-size: 1.75rem;
+    margin-bottom: 4rem;
 }
 
 ::placeholder { 
