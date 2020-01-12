@@ -26,7 +26,7 @@ server.use(logger);
 server.use('/posts', postRouter);
 server.use('/users', userRouter);
 server.get('/', (req, res) => {
-    res.send('Welcome to The User Blog');
+    res.send('Welcome to The Hobbit Blog');
 });
 
 const port = process.env.PORT || 9000;
