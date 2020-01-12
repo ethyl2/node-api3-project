@@ -1,4 +1,6 @@
 // code away!
+require('dotenv').config();
+
 const express = require('express');
 const postRouter = require('./posts/postRouter');
 const userRouter = require('./users/userRouter');
@@ -27,5 +29,5 @@ server.get('/', (req, res) => {
     res.send('Welcome to The User Blog');
 });
 
-const port = 9000;
+const port = process.env.PORT || 9000;
 server.listen(port, () => console.log(`API running on port ${port}. Let the magic happen!`));
