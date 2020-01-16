@@ -1,0 +1,110 @@
+.users-box {
+    padding: 6rem 3rem 3rem 6rem;
+    background-image: url('./images/darkHobbitHouse.jpg');
+    background-size: cover;
+    background-repeat: none;
+}
+
+.inner-users-box {
+    clear: both;
+}
+
+.users-box h3 {
+    padding-bottom: 2rem;
+    
+}
+
+.user-name-box {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.user-box {
+    width: 60%;
+    margin: 1rem auto 2rem auto;
+}
+
+.user-box h2 {
+    text-align: center;
+    padding: 5rem;
+    padding-top: 6rem;
+    font-size: 4.5rem;
+}
+
+form {
+    padding-top: 6rem;
+    font-size: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    width: 100%;
+}
+
+
+form input {
+    font-family: 'Acme', sans-serif;
+    background: #666666;
+    border: none;
+    color: rgb(231,176,111);
+    padding: 0.5rem;
+    outline: none;
+    border-radius: 3px;
+    width: 100%;
+}
+
+input.post {
+    height: 4rem;
+    font-size: 1.75rem;
+    margin-bottom: 4rem;
+}
+
+::placeholder { 
+    opacity: 1;
+}
+
+form button img {
+    max-width: 100%;
+}
+
+.add-form {
+    float: left;
+}
+
+.user-box .post-box {
+    border: .1rem solid ivory;
+    border-bottom: none;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.user-box p {
+    font-size: 2.5rem;
+    padding: 3rem;
+    line-height: 5rem;
+    text-align: center;
+}
+
+.user-box .post-box:last-of-type {
+    border-bottom: .1rem solid ivory;
+}
+
+.name-box {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.name-box .icon-container {
+    margin-bottom: 6rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.name-box .icon-container:hover {
+    transform: scale(2);
+}

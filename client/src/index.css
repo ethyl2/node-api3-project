@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css?family=Acme&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 62.5%;
+  text-align: left;
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Acme', sans-serif;
+  background: black;
+  color: rgb(231,176,111);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 3rem;
+  letter-spacing: 0.2rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+p {
+  color: green;
+  font-size: 1.5rem;
+}
+
+a {
+  font-size: 2rem;
+  padding-left: 2rem;
+  color: ivory;
+  text-decoration: none;
+}
+
+a:hover {
+  font-style: italic;
+  color: rgb(3, 151, 3);
+}
+
+header {
+  padding: 3rem;
+  text-align: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid gray;
+  background: black;
+}
+
+header h1 {
+  color: rgb(231,176,111);
+  font-size: 5rem;
+}
+
+.icon-container {
+  width: 5rem;
+}
+
+.icon-container img {
+  width: 100%;
+}
+
+button {
+  border: none;
+  outline: none;
+  background: black;
+  width: 5rem;
+  color: white;
+  font-size: 2.25rem;
+}
